@@ -9,16 +9,15 @@ create table db_ec.user(
   password varchar(255) not null comment 'password',
   mobile varchar(255) not null unique comment 'mobile'
 )comment 'user table';
-
 drop table if exists db_ec.user_info;
-create table db_ec.user.info(
-  id int auto_increment primary key comment 'id PK',
+create table db_ec.user_info
+(
+  id     int auto_increment primary key comment 'id PK',
   avatar varchar(255) comment 'avatar',
   gender char(2) comment 'gender',
-  city varchar(255) comment 'city',
-  useId int comment 'user id FK'
-)comment 'user info table';
-
+  city   varchar(255) comment 'city',
+  userId int comment 'user id FK'
+) comment 'user info table';
 drop table if exists db_ec.category;
 create table db_ec.category(
   id int auto_increment primary key comment 'id PK',
@@ -52,7 +51,7 @@ create table db_ec.pictures
 alter table db_ec.user_info
   add constraint
     user_info_fk_userId
-    foreign key (useId)
+    foreign key (userId)
       references db_ec.user(id);
 alter table db_ec.category
   add constraint
@@ -98,5 +97,19 @@ insert into db_ec.user value (null,'zhao',md5(zhao));
 -- 用户名登陆
 select * from db_ec.user where user='zhao'and password =md5('zhao');
 
-
 drop database db_ec;
+
+drop table if exists db_ec.order;
+create table db_ec.order
+(
+  id     int auto_increment primary key comment 'id PK',
+  store varchar(255) comment '店铺',
+  property varchar(255) comment '属性',
+  price  double(6,2) comment '单价',
+  quantity int comment '数量',
+  TotalPrice int comment '总价',
+  site varchar(255) comment '地址',
+  recipients varchar(255) comment '收件人',
+  tel varchar(255) comment '电话号码'
+) comment 'db_ec.order table';
+
